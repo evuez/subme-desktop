@@ -1,0 +1,29 @@
+html, body, div {
+	margin: 0;
+	padding: 0;
+}
+
+#holder {
+	float: left;
+	box-sizing: border-box;
+	border: 10px dashed #ccc;
+	width: 280px;
+	height: 280px;
+	text-align: center;
+	line-height: 260px;
+	margin: 10px;
+}
+#holder .hint {
+	font-family: sans-serif;
+	color: #ccc;
+	font-size: 18px;
+}
+
+#holder.hover {
+	border: 10px dashed #333;
+}
+
+
+#queue {
+	float: right;
+}
