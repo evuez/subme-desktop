@@ -46,6 +46,10 @@ body {
 	float: left;
 	padding: 0 10px;
 	width: 80%;
+	height: 30px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 #queue .job__status {
 	float: right;
