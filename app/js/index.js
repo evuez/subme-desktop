@@ -8,8 +8,10 @@
 window.$ = window.jQuery = require('../lib/jquery');
 
 var OpenSubtitlesAPI = require('opensubtitles-api');
-var OpenSubtitles = new OpenSubtitlesAPI('evuez')
+var http = require('http');
+var fs = require('fs');
 
+var OpenSubtitles = new OpenSubtitlesAPI('evuez')
 var holder = document.getElementById('holder');
 var $queue = $('#queue');
 var job = '<div class="job"><div class="job__file"></div><div class="job__status is-pending"></div></div>';
@@ -50,7 +52,10 @@ function processQueue(file) {
 	OpenSubtitles.search({
 		path: file.path,
 	}).then(function (subtitles) {
-		console.log(subtitles.en.url);
+		var subfile = fs.createWriteStream(file.path.split('.')[0] + '.' + subtitles.en.url.split('.').pop());
+		var request = http.get(subtitles.en.url, function(response) {
+		  response.pipe(subfile);
+		});
 	});
 }
 
