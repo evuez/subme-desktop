@@ -23,7 +23,7 @@ var queueJob = function(file, callback) {
 	$job.find('.job__file').first().text(file.path);
 	$queue.append($job);
 
-	callback(file);
+	callback(file, $job);
 };
 
 
@@ -48,13 +48,17 @@ holder.ondrop = function (e) {
 	return false;
 };
 
-function processQueue(file) {
+function processQueue(file, $job) {
+	$job.find('.job__status').first().removeClass('is-pending');
+	$job.find('.job__status').first().addClass('is-started');
 	OpenSubtitles.search({
 		path: file.path,
 	}).then(function (subtitles) {
 		var subfile = fs.createWriteStream(file.path.split('.')[0] + '.' + subtitles.en.url.split('.').pop());
 		var request = http.get(subtitles.en.url, function(response) {
-		  response.pipe(subfile);
+			response.pipe(subfile);
+			$job.find('.job__status').first().removeClass('is-started');
+			$job.find('.job__status').first().addClass('is-done');
 		});
 	});
 }
