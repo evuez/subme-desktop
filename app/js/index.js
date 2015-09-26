@@ -17,6 +17,8 @@ var $queue = $('#queue');
 var job = '<div class="job"><div class="job__file"></div><div class="job__status is-pending"></div></div>';
 
 
+var configuration = JSON.parse(fs.readFileSync('configuration.json', 'utf8'));
+
 
 var queueJob = function(file, callback) {
 	var $job = $(job);
@@ -54,8 +56,15 @@ function processQueue(file, $job) {
 	OpenSubtitles.search({
 		path: file.path,
 	}).then(function (subtitles) {
-		var subfile = fs.createWriteStream(file.path.split('.')[0] + '.' + subtitles.en.url.split('.').pop());
-		var request = http.get(subtitles.en.url, function(response) {
+		for (var i = 0; i < configuration.languages.length; i++) {
+			if (configuration.languages[i] in subtitles) {
+				var sublang = subtitles[configuration.languages[i]];
+				break;
+			}
+		}
+
+		var subfile = fs.createWriteStream(file.path.split('.')[0] + '.' + sublang.url.split('.').pop());
+		var request = http.get(sublang.url, function(response) {
 			response.pipe(subfile);
 			$job.find('.job__status').first().removeClass('is-started');
 			$job.find('.job__status').first().addClass('is-done');
