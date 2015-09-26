@@ -15,7 +15,7 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
 	mainWindow = new BrowserWindow({
 		height: 300,
-		width: 300
+		width: 400
 	});
 	mainWindow.setMenuBarVisibility(false);
 
