@@ -45,7 +45,20 @@ holder.ondrop = function (e) {
 	var file = e.dataTransfer.files[0];
 	var reader = new FileReader();
 
-	queueJob(file, processQueue);
+	console.log(file);
+
+	if (fs.lstatSync(file.path).isDirectory()) {
+		var files = fs.readdirSync(file.path);
+		for (var i = 0; i < files.length; i++) {
+			var filepath = file.path + '/' + files[i];
+
+			if (!fs.lstatSync(filepath).isDirectory()) {
+				queueJob({'path': filepath}, processQueue);
+			}
+		}
+	} else {
+		queueJob(file, processQueue);
+	}
 
 	return false;
 };
