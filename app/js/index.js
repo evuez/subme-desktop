@@ -1,13 +1,16 @@
 'use strict';
 
+window.$ = window.jQuery = require('../lib/jquery');
+
 var holder = document.getElementById('holder');
-var queue = document.getElementById('queue');
+var $queue = $('#queue');
+var job = '<div class="job"><div class="job__file"></div><div class="job__status is-pending"></div></div>';
 
 
-var queueFile = function(file) {
-	var jobRow = queue.insertRow(queue.rows.length);
-	var fileCell = jobRow.insertCell(0);
-	fileCell.appendChild(document.createTextNode(file.path));
+var queueJob = function(file) {
+	var $job = $(job);
+	$job.find('.job__file').first().text(file.path);
+	$queue.append($job);
 };
 
 
@@ -25,7 +28,7 @@ holder.ondrop = function (e) {
 	// 	holder.style.background = 'url(' + event.target.result + ') no-repeat center';
 	// };
 
-	queueFile(file);
+	queueJob(file);
 
 	console.log(file);
 	reader.readAsDataURL(file);

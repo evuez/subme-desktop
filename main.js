@@ -15,13 +15,11 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
 	mainWindow = new BrowserWindow({
 		height: 300,
-		width: 600
+		width: 300
 	});
 	mainWindow.setMenuBarVisibility(false);
 
 	mainWindow.loadUrl('file://' + __dirname + '/app/index.html');
-
-	// mainWindow.openDevTools();
 
 	mainWindow.on('closed', function() {
 		mainWindow = null;
