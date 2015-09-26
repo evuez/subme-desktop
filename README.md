@@ -2,4 +2,16 @@
 ## DISCLAIMER
 To all JS dev, you really shouldn't take a look at my code. It's pure garbage.
 
-## Install
+## Configuration
+
+Just update the configuration.json file:
+
+```json
+{
+  "languages": ["ar", "en", "ru"]
+}
+```
+
+First in list will be first tried.
+
+## Screenshort
